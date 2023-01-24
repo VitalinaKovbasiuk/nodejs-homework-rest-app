@@ -77,9 +77,6 @@ router.delete("/:contactId", async (req, res, next) => {
 
 router.put("/:contactId", async (req, res, next) => {
   try {
-    if (Object.keys(req.body).length === 0) {
-      throw createError(400, `Missing fields`);
-  }
      const { error } = contactsUpdateSchema.validate(req.body);
     if (error) {
       throw createError(400, `Missing fields`);

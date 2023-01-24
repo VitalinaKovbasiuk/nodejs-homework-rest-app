@@ -59,7 +59,7 @@ const addContact = async ({ name, email, phone }) => {
   }
 };
 
-const updateContact = async (id, { name, email, phone }) => {
+const updateContact = async (id, body) => {
    const contacts = await listContacts();
   const item = contacts.findIndex((contact) => contact.id === id);
 
@@ -67,7 +67,7 @@ const updateContact = async (id, { name, email, phone }) => {
     return null;
   }
 
-  contacts[item] = { id, name, email, phone };
+  contacts[item] = { ...contacts[item], ...body };
   await updateContacts(contacts);
   return contacts[item];
 }
