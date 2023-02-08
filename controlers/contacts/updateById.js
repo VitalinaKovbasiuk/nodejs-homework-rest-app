@@ -1,14 +1,17 @@
 const { Contact } = require("../../schemas/schemas");
 
 const { NotFound } = require("http-errors");
+const ObjectId = require("mongodb").ObjectId;
 
 const updateById = async (req, res) => {
-  const { contactId } = req.params;
-  const result = await Contact.findByIdAndUpdate(contactId, req.body, {
+   const owner = req.user._id;
+  const _id = ObjectId(req.params.contactId);
+
+  const result = await Contact.findOneAndUpdate({ owner, _id },  { $set: req.body }, {
     new: true,
   });
   if (!result) {
-    throw new NotFound(`Product with id=${contactId} not found`);
+    throw new NotFound(`Product with id=${_id} not found`);
   }
   res.json(result);
 };
