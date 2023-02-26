@@ -5,5 +5,6 @@ const auth = require("./auth");
 module.exports = {
     contacts,
     user,
-    auth
+    auth,
+   
 }
