@@ -62,8 +62,21 @@ const userSchema = Schema(
     enum: ["starter", "pro", "business"],
     default: "starter"
   },
-    token: String,
-    avatarURL: String,
+    token: {
+      type: String,
+      default: null,
+  },
+    avatarURL: {
+    type: String,
+  },
+    verify: {
+    type: Boolean,
+    default: false,
+  },
+  verificationToken: {
+    type: String,
+    required: [true, 'Verify token is required'],
+  },
 },
   { versionKey: false, timestamps: true }
 );
@@ -84,6 +97,10 @@ const joiRegisterSchema = Joi.object({
   subscription: Joi.string().required(),
 });
 
+const verifyEmailSchema = Joi.object({
+  email: Joi.string().required(),
+});
+
 const joiLoginSchema = Joi.object({
   password: Joi.string(),
   email: Joi.string().min(6),
@@ -101,4 +118,5 @@ module.exports = {
   User,
   joiRegisterSchema,
   joiLoginSchema,
+  verifyEmailSchema,
 };
